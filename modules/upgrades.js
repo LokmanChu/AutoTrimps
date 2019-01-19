@@ -32,7 +32,10 @@ function buyUpgrades(coordsOnly) {
             var coordinationMult = 1+0.25*Math.pow(0.98, game.portal.Coordinated.level);
             var currentSendAfter = game.resources.trimps.getCurrentSend()*coordinationMult;
             var popArmyRatioAfter = trimpsRealMax/currentSendAfter;
-            if (popArmyRatioAfter <= 1001 && game.jobs.Amalgamator.owned > 0){
+            
+            // if a goal is set, don't buy coords iff we have exactly as many amals as the goal
+            if (popArmyRatioAfter <= 1001 && (getPageSetting('TillWeHaveAmalg') > 0 ?
+                    game.jobs.Amalgamator.owned == getPageSetting('TillWeHaveAmalg') : game.jobs.Amalgamator.owned > 0) {
                 var cellNum = (game.global.mapsActive) ? game.global.lastClearedMapCell + 1 : game.global.lastClearedCell + 1;
                 if(lastAmalSpamCell != cellNum){
                     lastAmalSpamCell = cellNum;
